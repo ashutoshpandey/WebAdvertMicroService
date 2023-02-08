@@ -1,8 +1,8 @@
-﻿using Amazon.Extensions.CognitoAuthentication;
-using Amazon.Runtime.Internal.Util;
-using Microsoft.AspNetCore.Identity;
+﻿using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Amazon.Extensions.CognitoAuthentication;
+
 using WebAdvert.Web.Models;
 using WebAdvert.Web.Services.Contract;
 
@@ -43,9 +43,9 @@ namespace WebAdvert.Web.Services
             return await _userManager.CreateAsync(user, model.Password);
         }
 
-        public async Task<IdentityResult> LoginAsync(LoginModel model)
+        public async Task<SignInResult> LoginAsync(LoginModel model)
         {
-            throw new System.NotImplementedException();
+            return await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
         }
     }
 }
